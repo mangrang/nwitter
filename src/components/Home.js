@@ -1,15 +1,11 @@
 import { useState, useEffect } from "react";
-import {
-  addDoc,
-  collection,
-  onSnapshot,
-  query,
-  orderBy,
-} from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { dbService } from "fbase";
 import Nweet from "components/Nweet";
+
+import NweetFactory from "./NweetFactory";
+
 const Home = ({ userObj }) => {
-  const [nweet, setNweet] = useState("");
   const [nweets, setNweets] = useState([]);
 
   //   const getNweets = async () => {
@@ -37,35 +33,10 @@ const Home = ({ userObj }) => {
     });
   }, []);
   //   console.log(nweets);
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      await addDoc(collection(dbService, "nweets"), {
-        text: nweet,
-        createdAT: Date.now(),
-        creatorId: userObj.uid,
-      });
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-    setNweet("");
-  };
-
-  const onChange = (event) => {
-    event.preventDefault();
-    const {
-      target: { value },
-    } = event;
-    setNweet(value);
-  };
-
-  const onFileChange = (event) => {
-    console.log(event.target.files);
-  };
 
   return (
     <>
-      <form onSubmit={onSubmit}>
+      {/* <form onSubmit={onSubmit}>
         <input
           value={nweet}
           onChange={onChange}
@@ -73,9 +44,16 @@ const Home = ({ userObj }) => {
           placeholder="what's on your mind?"
           maxLength={120}
         />
-        <input type="submit" accept="image/*" onChange={onFileChange} />
+        <input type="file" accept="image/*" onChange={onFileChange} />
         <input type="submit" value="Nweet" />
-      </form>
+        {attachment && (
+          <div>
+            <img src={attachment} width="50px" height="50px" />
+            <button onClick={onClearAttachment}>Clear</button>
+          </div>
+        )}
+      </form> */}
+      <NweetFactory userObj={userObj} />
       <div>
         {nweets.map((nweet) => (
           //   <div key={nweet.id}>

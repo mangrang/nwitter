@@ -7,6 +7,7 @@ function App() {
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userObj, setUserObj] = useState(null);
+  const [changeName, setChangeName] = useState(false);
   // setInterval(() => console.log(auth.currentUser), 2000);
 
   useEffect(() => {
@@ -15,16 +16,27 @@ function App() {
       if (user) {
         setIsLoggedIn(user);
         setUserObj(user);
+        if (user.displayName === null) {
+          const name = user.email.split("@")[0];
+          user.displayName = name;
+        }
       } else {
         setIsLoggedIn(false);
       }
       setInit(true);
     });
   }, []);
+
+  const refreshUser = () => setChangeName((prev) => !prev);
+
   return (
     <>
       {init ? (
-        <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} />
+        <AppRouter
+          isLoggedIn={isLoggedIn}
+          userObj={userObj}
+          refreshUser={refreshUser}
+        />
       ) : (
         "initializing..."
       )}
