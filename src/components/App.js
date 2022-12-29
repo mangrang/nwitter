@@ -8,10 +8,8 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userObj, setUserObj] = useState(null);
   const [changeName, setChangeName] = useState(false);
-  // setInterval(() => console.log(auth.currentUser), 2000);
 
   useEffect(() => {
-    // const user = auth.currentUser;
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsLoggedIn(user);

@@ -1,9 +1,7 @@
 import { getAuth, signOut, updateProfile } from "firebase/auth";
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { collection, query, getDocs, where, orderBy } from "firebase/firestore";
-import { dbService, storageService } from "fbase";
 const Profile = ({ userObj, refreshUser }) => {
   const history = useHistory();
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
@@ -28,35 +26,28 @@ const Profile = ({ userObj, refreshUser }) => {
     }
   };
 
-  // const getMyNweets = async () => {
-  //   const q = query(
-  //     collection(dbService, "nweets"),
-  //     where("creatorId", "==", userObj.uid),
-  //     orderBy("createdAt", "desc")
-  //   );
-  //   const querySnapshot = await getDocs(q);
-  //   querySnapshot.forEach((doc) => {
-  //     console.log(doc.id, " => ", doc.data());
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   getMyNweets();
-  // }, []);
-
   return (
-    <>
-      <form onSubmit={onSubmit}>
+    <div className="container">
+      <form onSubmit={onSubmit} className="profileForm">
         <input
           onChange={onChange}
           type="text"
           placeholder="Display name"
           value={newDisplayName}
+          autoFocus
+          className="formInput"
         />
-        <input type="submit" value="Updates Profile" />
+        <input
+          type="submit"
+          value="Updates Profile"
+          className="formBtn"
+          style={{ marginTop: 10 }}
+        />
       </form>
-      <button onClick={onLogOutClick}>Log Out</button>
-    </>
+      <span className="formBtn cancelBtn logout" onClick={onLogOutClick}>
+        Log Out
+      </span>
+    </div>
   );
 };
 

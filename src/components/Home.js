@@ -8,21 +8,11 @@ import NweetFactory from "./NweetFactory";
 const Home = ({ userObj }) => {
   const [nweets, setNweets] = useState([]);
 
-  //   const getNweets = async () => {
-  //     const dbNweets = await getDocs(collection(dbService, "nweets"));
-  //     // console.log(dbNweet);
-  //     dbNweets.forEach((document) => {
-  //       const nweetObject = { ...document.data(), id: document.id };
-  //       setNweets((prev) => [nweetObject, ...prev]);
-  //     });
-  //   };
-
   useEffect(() => {
     const q = query(
       collection(dbService, "nweets"),
       orderBy("createdAT", "desc")
     );
-    // query(orderBy("createdAt", "desc"));
 
     onSnapshot(q, (snapshot) => {
       const nweetArr = snapshot.docs.map((doc) => ({
@@ -32,29 +22,11 @@ const Home = ({ userObj }) => {
       setNweets(nweetArr);
     });
   }, []);
-  //   console.log(nweets);
 
   return (
-    <>
-      {/* <form onSubmit={onSubmit}>
-        <input
-          value={nweet}
-          onChange={onChange}
-          type="text"
-          placeholder="what's on your mind?"
-          maxLength={120}
-        />
-        <input type="file" accept="image/*" onChange={onFileChange} />
-        <input type="submit" value="Nweet" />
-        {attachment && (
-          <div>
-            <img src={attachment} width="50px" height="50px" />
-            <button onClick={onClearAttachment}>Clear</button>
-          </div>
-        )}
-      </form> */}
+    <div className="container">
       <NweetFactory userObj={userObj} />
-      <div>
+      <div style={{ marginTop: 30 }}>
         {nweets.map((nweet) => (
           //   <div key={nweet.id}>
           //     <h4>{nweet.text}</h4>
@@ -66,7 +38,7 @@ const Home = ({ userObj }) => {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 export default Home;
